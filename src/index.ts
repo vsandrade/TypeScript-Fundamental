@@ -21,8 +21,24 @@ accessOptionsValues.forEach((value: string, i: number) => {
   `
 })
 
+//Declaration
+function addManager(): void {
 
-function addEmployee(): void {
+}
+
+//Anonymous Function Expression
+const addAdmin = function (): string {
+  return "";
+}
+
+//Arrow Function Expression
+const addMaster = (): never => {
+  while(true) {
+
+  } 
+}
+
+function addEmployee (): void {
   let content = document.getElementById('content') as HTMLInputElement;
   let fullName: HTMLInputElement | null = document.querySelector('#fullName');
   let register = <HTMLInputElement>document.querySelector('#register');
