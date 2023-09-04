@@ -66,7 +66,8 @@ function createLineByUserFields(
   fullName: string,
   register: string | number = Math.random().toString(36).substring(7).toUpperCase(),
   active: boolean = false,
-  access: accessOptions = accessOptions.undefined
+  access: accessOptions = accessOptions.undefined,
+  address?: string
 ): string {
   return `
     <div class="card mb-1">
