@@ -28,17 +28,28 @@ function addEmployee (): void {
   let register = <HTMLInputElement>document.querySelector('#register');
   let admin = document.querySelector('input[name="access"]:checked') as HTMLInputElement;
   let active = document.querySelector('#active') as HTMLInputElement;
+  let user: userType
 
-  let user: userType = {
-    fullName: fullName!.value,
-    register: register.value,
-    access: <accessOptions>admin.value,
-    active: active.checked
+  try {
+    user = {
+      fullName: fullName!.value,
+      register: register.value,
+      access: <accessOptions>admin.value,
+      active: active.checked
+    }
+    content.innerHTML += <string>createLine(user);
+
+  } catch (error) {
+    user = {
+      fullName: fullName!.value,
+      register: register.value,
+    }
+    content.innerHTML += <string>createLineByUserFields(
+      user.fullName, 
+      user.register
+    );
   }
 
-  content.innerHTML += <string>(
-    createLine(user)
-  );
 }
 
 accessOptionsValues.forEach((value: string, i: number) => {
@@ -51,6 +62,27 @@ accessOptionsValues.forEach((value: string, i: number) => {
   </div>
   `
 })
+
+function createLineByUserFields(
+  fullName: string,
+  register: string | number,
+  active?: boolean,
+  access?: accessOptions
+): string {
+  return `
+    <div class="card mb-1">
+      <div class="card-header">
+        ${register}
+      </div>
+      <div class="card-body">
+        <h5 class="card-title">${fullName}</h5>
+        <a href="#" class="btn btn-primary">${active ? 'Ativo' : 'Inativo'}</a>
+      </div>
+      <div class="card-footer bg-transparent border-success">
+        Acesso: ${access ?? 'Não Informado'}
+      </div>
+    </div>`;
+}
 
 function createLine(user: userType): string {
   return `
