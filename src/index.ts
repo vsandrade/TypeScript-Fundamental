@@ -45,8 +45,7 @@ function addEmployee (): void {
       register: register.value,
     }
     content.innerHTML += <string>createLineByUserFields(
-      user.fullName, 
-      user.register
+      user.fullName
     );
   }
 
@@ -65,9 +64,9 @@ accessOptionsValues.forEach((value: string, i: number) => {
 
 function createLineByUserFields(
   fullName: string,
-  register: string | number,
-  active?: boolean,
-  access?: accessOptions
+  register: string | number = Math.random().toString(36).substring(7).toUpperCase(),
+  active: boolean = false,
+  access: accessOptions = accessOptions.undefined
 ): string {
   return `
     <div class="card mb-1">
@@ -79,7 +78,7 @@ function createLineByUserFields(
         <a href="#" class="btn btn-primary">${active ? 'Ativo' : 'Inativo'}</a>
       </div>
       <div class="card-footer bg-transparent border-success">
-        Acesso: ${access ?? 'Não Informado'}
+        Acesso: ${access == accessOptions.undefined ? 'Não Definido' : access}
       </div>
     </div>`;
 }
