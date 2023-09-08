@@ -12,12 +12,32 @@ export type userType = {
   active?: boolean
 }
 
-type coodenadas = {
-  x: number;
-  y: number;
+interface ICar {
+  nickname: string;
+  color: string;
+  Tyres?: number;
+  speed: () => number;
+  break: () => number;
+}
+
+const carBear: ICar = {
+  nickname: 'The Bear',
+  color: 'Black Piano',
+  speed: (): number => {
+    return 5;
+  },
+  break: (): number => {
+    return 2;
+  },
 };
 
-interface ICoodenadasXY {
-  x: number;
-  y: number;
-}
+const carOrange: ICar = {
+  nickname: 'The Orange',
+  color: 'Orange',
+  speed: (): number => {
+    return 4;
+  },
+  break: (): number => {
+    return 3;
+  },
+};
