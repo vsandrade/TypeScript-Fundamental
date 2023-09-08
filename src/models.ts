@@ -5,12 +5,27 @@ export enum accessOptions {
   undefined = 'Não Definido'
 }
 
-export type userType = {
+/// Using Type ------- ⬇️ ⬇️ ⬇️ ⬇️
+
+export type PersonType = {
+  address: string[];
+  addPerson(): void;
+}
+
+export type userType = PersonType & {
   fullName: string,
   register?: string | number,
   access?: accessOptions,
   active?: boolean
 }
+
+const TUser: userType = {
+  fullName: '',
+  address: [],
+  addPerson(): void {}
+}
+
+/// Using Interface ------- ⬇️ ⬇️ ⬇️ ⬇️
 
 interface IPerson {
   fullName: string;
@@ -24,21 +39,10 @@ interface IUser extends IPerson {
   active: boolean;
 }
 
-export interface ISpearker extends IPerson {
-  eventAsSpeaker: string[];
-  description: string;
-  linkedInURL: string;
-}
-
-export interface IParticipant extends IUser, IPerson {
-  eventAsParticipant: string[];
-}
-
-const user: IParticipant = {
-  fullName: 'Vini',
-  eventAsParticipant: ['Angular', 'Typescript', 'React'],
+const user: IUser = {
+  fullName: '',
+  address: [],
   access: accessOptions.employee,
   active: true,
-  address: ['29 Casa', '25 Trabalho'],
-  addPerson(): void {},
-};
+  addPerson(): void {}
+}
