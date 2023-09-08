@@ -15,18 +15,21 @@ export type userType = {
 interface ICar {
   readonly nickname: string;
   color: string;
-  Tires?: number;
-  speed: () => number;
-  break: () => number;
+  tires?: number;
+  speedValue: number;
+  breakValue?: number;
+  speed(numero1: number): number;
+  break(numero2: number): number;
 }
 
 const carBear: ICar = {
   nickname: 'The Bear',
   color: 'Black Piano',
-  speed: (): number => {
-    return 5;
+  speedValue: 5,
+  speed(a: number): number {
+    return this.speedValue;
   },
-  break: (): number => {
+  break(b: number): number {
     return 2;
   },
 };
@@ -34,14 +37,21 @@ const carBear: ICar = {
 // Eu não posso fazer isso da linha abaixo, porque a propriedade é Read Only. 
 // ou somente leitura.
 // carBear.nickname = 'The Lion'
+console.log(carBear.nickname)
 
 const carOrange: ICar = {
   nickname: 'The Orange',
   color: 'Orange',
-  speed: (): number => {
-    return 4;
+  speedValue: 4,
+  breakValue: 3,
+  speed(): number {
+    return this.speedValue;
   },
-  break: (): number => {
-    return 3;
+  break: function (): number {
+    return this.breakValue;
   },
 };
+
+console.log(carOrange.nickname)
+console.log(carOrange.speed(1))
+console.log(carOrange.break(1))
