@@ -12,26 +12,33 @@ export type userType = {
   active?: boolean
 }
 
-export interface IPerson {
-  fullName: string,
-  register?: string | number,
-  access?: accessOptions,
-  active?: boolean,
+interface IPerson {
+  fullName: string;
+  address: string[];
   addPerson(): void;
 }
 
-
-
-export interface IUser extends IPerson {
-  addressHome: string,
-  addressWork: string
+interface IUser extends IPerson {
+  register?: string | number;
+  access: accessOptions;
+  active: boolean;
 }
 
-const user: IUser = {
+export interface ISpearker extends IPerson {
+  eventAsSpeaker: string[];
+  description: string;
+  linkedInURL: string;
+}
+
+export interface IParticipant extends IUser, IPerson {
+  eventAsParticipant: string[];
+}
+
+const user: IParticipant = {
   fullName: 'Vini',
-  addressHome: '29 Casa',
-  addressWork: '25 Trabalho',
-  addPerson(): void {
-    
-  }
-}
+  eventAsParticipant: ['Angular', 'Typescript', 'React'],
+  access: accessOptions.employee,
+  active: true,
+  address: ['29 Casa', '25 Trabalho'],
+  addPerson(): void {},
+};
