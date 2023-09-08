@@ -24,21 +24,25 @@ const updateUserLayout = async (): Promise<void> => {
 updateUserLayout()
 
 function addEmployee (): void {
-  let fullName: HTMLInputElement | null = document.querySelector('#fullName');
-  let register = <HTMLInputElement>document.querySelector('#register');
-  let admin = document.querySelector('input[name="access"]:checked') as HTMLInputElement;
-  let active = document.querySelector('#active') as HTMLInputElement;
-  let addressHome = document.querySelector('#addressHome') as HTMLInputElement;
-  let addressWork = document.querySelector('#addressWork') as HTMLInputElement;
+  let formFields = [
+    <HTMLInputElement>document.querySelector('#fullName'),
+    <HTMLInputElement>document.querySelector('#register'),
+    document.querySelector('input[name="access"]:checked') as HTMLInputElement,
+    document.querySelector('#active') as HTMLInputElement,
+    document.querySelector('#addressHome') as HTMLInputElement,
+    document.querySelector('#addressWork') as HTMLInputElement,
+  ];
 
-  content.innerHTML += <string>createLineByUserFields(
-    fullName!.value,
-    register.value,
-    active.checked,
-    <accessOptions>admin.value,
-    addressHome.value,
-    addressWork.value
-  );
+  const [fullName, register, admin, active, addressHome, addressWork] = formFields;
+
+  let user: userType = {
+    fullName: fullName!.value,
+    register: register.value != '' ? register.value : undefined,
+    active: active.checked,
+    access: <accessOptions>admin.value,
+  };
+
+  content.innerHTML += <string>createLine(user, addressHome.value, addressWork.value);
 }
 
 accessOptionsValues.forEach((value: string, i: number) => {
@@ -53,11 +57,13 @@ accessOptionsValues.forEach((value: string, i: number) => {
 });
 (<HTMLInputElement>document.getElementById('accessRadio0')).checked = true;
 
-function createLineByUserFields(
-  fullName: string,
-  register: string | number = Math.random().toString(36).substring(7).toUpperCase(),
-  active: boolean = false,
-  access: accessOptions = accessOptions.undefined,
+function createLine(
+  {
+    fullName,
+    register = Math.random().toString(36).substring(7).toUpperCase(),
+    active = false,
+    access = accessOptions.undefined,
+  }: userType,
   ...address: string[]
 ): string {
   return `
@@ -69,27 +75,15 @@ function createLineByUserFields(
         <h5 class="card-title">${fullName}</h5>
         <a href="#" class="btn btn-primary">${active ? 'Ativo' : 'Inativo'}</a>
       </div>
-      <div class="card-body">
-        <h6 class="card-title">${address.join('<br/>')}</h6>
-      </div>
+      ${
+        address.length > 0
+          ? `<div class="card-body">
+          <h6 class="card-title">${address.join('<br/>')}</h6>
+        </div>`
+          : ''
+      }
       <div class="card-footer bg-transparent border-success">
-        Acesso: ${access == accessOptions.undefined ? 'Não Definido' : access}
-      </div>
-    </div>`;
-}
-
-function createLine(user: userType): string {
-  return `
-    <div class="card mb-1">
-      <div class="card-header">
-        ${user.register}
-      </div>
-      <div class="card-body">
-        <h5 class="card-title">${user.fullName}</h5>
-        <a href="#" class="btn btn-primary">${user.active ? 'Ativo' : 'Inativo'}</a>
-      </div>
-      <div class="card-footer bg-transparent border-success">
-        Acesso: ${user.access}
+        Acesso: ${access}
       </div>
     </div>`;
 }

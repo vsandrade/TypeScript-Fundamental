@@ -7,7 +7,7 @@ export enum accessOptions {
 
 export type userType = {
   fullName: string,
-  register: string | number,
+  register?: string | number,
   access?: accessOptions,
   active?: boolean
 }
