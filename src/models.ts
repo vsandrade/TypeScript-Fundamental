@@ -13,9 +13,9 @@ export type userType = {
 }
 
 interface ICar {
-  nickname: string;
+  readonly nickname: string;
   color: string;
-  Tyres?: number;
+  Tires?: number;
   speed: () => number;
   break: () => number;
 }
@@ -30,6 +30,10 @@ const carBear: ICar = {
     return 2;
   },
 };
+
+// Eu não posso fazer isso da linha abaixo, porque a propriedade é Read Only. 
+// ou somente leitura.
+// carBear.nickname = 'The Lion'
 
 const carOrange: ICar = {
   nickname: 'The Orange',
