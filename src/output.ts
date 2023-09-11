@@ -2,20 +2,43 @@ import { accessOptions, IUser } from "./models";
 
 export class UserController {
   //propriedades
-  button = <HTMLInputElement>document.querySelector('button[id="add"]');
+  content: HTMLElement = this.getElement('#content');
+  accessRadio: HTMLElement = this.getElement('#accessRadio');
+  accessOptionsValues = Object.values(accessOptions);
+  button: HTMLFormElement = this.getFormElement('#insert');
 
   //construtor
   constructor() {
     this.button.addEventListener('click', () => this.addEmployee());
   }
 
+  private getElement(selector: string): HTMLElement {
+    return document.querySelector(selector) as HTMLElement
+  }
+
+  private getFormElement(selector: string): HTMLFormElement {
+    return document.querySelector(selector) as HTMLFormElement
+  }
+
   //funcionalidades
-  async updateUserLayout(): Promise<void> {
+  async userLayout(): Promise<void> {
     const users: IUser[] = await this.getUser();
 
     users.map((user: IUser) => {
-      content.innerHTML += <string>this.createLine(user);
+      this.content.innerHTML += <string>this.createLine(user);
     });
+
+    this.accessOptionsValues.forEach((value: string, i: number) => {
+      this.accessRadio.innerHTML += `
+      <div class="form-check">
+        <input class="form-check-input" type="radio" name="access" id="accessRadio${i}" value="${value}">
+        <label class="form-check-label capitalLetter" for="no">
+          ${value}
+        </label>
+      </div>
+      `;
+    });
+    (this.getFormElement('#accessRadio0')).checked = true;
   };
 
   async getUser(): Promise<IUser[]> {
@@ -26,12 +49,12 @@ export class UserController {
 
   addEmployee (): void {
     let formFields = [
-      <HTMLInputElement>document.querySelector('#fullName'),
-      <HTMLInputElement>document.querySelector('#register'),
-      document.querySelector('input[name="access"]:checked') as HTMLInputElement,
-      document.querySelector('#active') as HTMLInputElement,
-      document.querySelector('#addressHome') as HTMLInputElement,
-      document.querySelector('#addressWork') as HTMLInputElement,
+      this.getFormElement('#fullName'),
+      this.getFormElement('#register'),
+      this.getFormElement('input[name="access"]:checked'),
+      this.getFormElement('#active'),
+      this.getFormElement('#addressHome'),
+      this.getFormElement('#addressWork'),
     ];
   
     const [fullName, register, admin, active, addressHome, addressWork] = formFields;
@@ -43,7 +66,7 @@ export class UserController {
       access: <accessOptions>admin.value,
     };
   
-    content.innerHTML += <string>this.createLine(user, addressHome.value, addressWork.value);
+    this.content.innerHTML += <string>this.createLine(user, addressHome.value, addressWork.value);
   }
 
   createLine(
@@ -77,20 +100,3 @@ export class UserController {
       </div>`;
   }
 }
-
-let content = document.getElementById('content') as HTMLInputElement;
-const accessRadio = <HTMLElement>document.getElementById('accessRadio');
-
-const accessOptionsValues = Object.values(accessOptions);
-
-accessOptionsValues.forEach((value: string, i: number) => {
-  accessRadio.innerHTML += `
-  <div class="form-check">
-    <input class="form-check-input" type="radio" name="access" id="accessRadio${i}" value="${value}">
-    <label class="form-check-label capitalLetter" for="no">
-      ${value}
-    </label>
-  </div>
-  `;
-});
-(<HTMLInputElement>document.getElementById('accessRadio0')).checked = true;
