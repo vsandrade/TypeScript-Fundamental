@@ -1,4 +1,4 @@
-import { accessOptions, IUser } from "./models";
+import { accessOptions, User } from "./models";
 
 export class UserController {
   //propriedades
@@ -22,9 +22,9 @@ export class UserController {
 
   //funcionalidades
   async userLayout(): Promise<void> {
-    const users: IUser[] = await this.getUser();
+    const users: User[] = await this.getUser();
 
-    users.map((user: IUser) => {
+    users.map((user: User) => {
       this.content.innerHTML += <string>this.createLine(user);
     });
 
@@ -41,9 +41,9 @@ export class UserController {
     (this.getFormElement('#accessRadio0')).checked = true;
   };
 
-  async getUser(): Promise<IUser[]> {
+  async getUser(): Promise<User[]> {
     const response: Response = await fetch('http://localhost:5011/users');
-    const users: IUser[] = await response.json();
+    const users: User[] = await response.json();
     return users;
   };
 
@@ -59,7 +59,7 @@ export class UserController {
   
     const [fullName, register, admin, active, addressHome, addressWork] = formFields;
   
-    let user: IUser = {
+    let user: User = {
       fullName: fullName!.value,
       register: register.value != '' ? register.value : undefined,
       active: active.checked,
@@ -75,7 +75,7 @@ export class UserController {
       register = Math.random().toString(36).substring(7).toUpperCase(),
       active = false,
       access = accessOptions.undefined,
-    }: IUser,
+    }: User,
     ...address: string[]
   ): string {
     return `
