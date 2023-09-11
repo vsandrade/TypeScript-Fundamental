@@ -1,4 +1,3 @@
-import { UserController } from './output'
+import UserController from './output';
 
-const userController = new UserController()
-userController.userLayout()
+UserController;

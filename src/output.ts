@@ -1,6 +1,6 @@
 import { accessOptions, User } from "./models";
 
-export class UserController {
+class UserController {
   //propriedades
   content: HTMLElement = this.getElement('#content');
   accessRadio: HTMLElement = this.getElement('#accessRadio');
@@ -10,6 +10,7 @@ export class UserController {
   //construtor
   constructor() {
     this.button.addEventListener('click', () => this.addEmployee());
+    this.userLayout()
   }
 
   private getElement(selector: string): HTMLElement {
@@ -100,3 +101,5 @@ export class UserController {
       </div>`;
   }
 }
+
+export default new UserController;
