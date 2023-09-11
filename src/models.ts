@@ -6,10 +6,10 @@ export enum accessOptions {
 }
 
 class Person {
+  public address?: string[]
   // Construtor
   constructor(
     public fullName: string, 
-    public address?: string[]
   ) {}
 }
 
