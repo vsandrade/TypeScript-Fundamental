@@ -1,9 +1,9 @@
 interface genericItem {
-  id: number;
-  name: string;
+  fullName: string;
+  register?: string | number;
 }
 
-export class GenericService<T extends genericItem> {
+export class GenericService<T> {
   public items: T[];
   protected URL: string;
 
@@ -13,16 +13,16 @@ export class GenericService<T extends genericItem> {
     this.items = list;
     return list;
   };
+}
+
+export class UserService<T extends genericItem> extends GenericService<T> {
+  URL: string = 'http://localhost:5011/users';
 
   getItemByName(name: string): T | undefined {
-    return this.items ? this.items.find((item) => (item.name = name)) : undefined
+    return this.items ? this.items.find((item) => (item.fullName = name)) : undefined
   };
 
   getItemById(id: number): T | undefined {
-    return this.items ? this.items.find((item) => (item.id = id)) : undefined
+    return this.items ? this.items.find((item) => (item.register = id)) : undefined
   };
-}
-
-export class Service<T extends genericItem> extends GenericService<T> {
-  URL: string = 'http://localhost:5011/users';
 }

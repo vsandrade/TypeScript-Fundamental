@@ -1,5 +1,5 @@
 import { accessOptions, User } from "./models";
-import { Service } from "./service/service";
+import { UserService } from "./service/service";
 
 class UserController {
   //propriedades
@@ -24,7 +24,7 @@ class UserController {
 
   //funcionalidades
   async userLayout(): Promise<void> {
-    const userService = new Service<User>();
+    const userService = new UserService<User>();
     const users: User[] = await userService.getItems();
 
     users.map((user: User) => {
