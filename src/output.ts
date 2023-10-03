@@ -25,7 +25,7 @@ class UserController {
   //funcionalidades
   async userLayout(): Promise<void> {
     const userService = new Service<User>();
-    const users: User[] = await userService.getList();
+    const users: User[] = await userService.getItems();
 
     users.map((user: User) => {
       this.content.innerHTML += <string>this.createLine(user);

@@ -23,6 +23,6 @@ export class GenericService<T extends genericItem> {
   };
 }
 
-export class Service<T> extends GenericService<T> {
+export class Service<T extends genericItem> extends GenericService<T> {
   URL: string = 'http://localhost:5011/users';
 }
