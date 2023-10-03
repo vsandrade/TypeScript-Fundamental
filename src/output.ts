@@ -23,7 +23,7 @@ class UserController {
 
   //funcionalidades
   async userLayout(): Promise<void> {
-    const users: User[] = await this.getUser();
+    const users: User[] = await this.getList<User>('http://localhost:5011/users');
 
     users.map((user: User) => {
       this.content.innerHTML += <string>this.createLine(user);
@@ -42,10 +42,10 @@ class UserController {
     (this.getFormElement('#accessRadio0')).checked = true;
   };
 
-  async getUser(): Promise<User[]> {
-    const response: Response = await fetch('http://localhost:5011/users');
-    const users: User[] = await response.json();
-    return users;
+  async getList<T>(url: string): Promise<T[]> {
+    const response: Response = await fetch(url);
+    const list: T[] = await response.json();
+    return list;
   };
 
   addEmployee (): void {
