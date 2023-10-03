@@ -3,7 +3,12 @@ interface genericItem {
   register?: string | number;
 }
 
-export class GenericService<T> {
+export interface IService<T> {
+  items: T[];
+  getItems: () => Promise<T[]>;
+}
+
+export class GenericService<T> implements IService<T>{
   public items: T[];
   protected URL: string;
 
