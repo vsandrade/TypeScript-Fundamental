@@ -1,4 +1,5 @@
 import { accessOptions, User } from "./models";
+import { Service } from "./service/service";
 
 class UserController {
   //propriedades
@@ -23,7 +24,8 @@ class UserController {
 
   //funcionalidades
   async userLayout(): Promise<void> {
-    const users: User[] = await this.getList<User>('http://localhost:5011/users');
+    const userService = new Service<User>();
+    const users: User[] = await userService.getList();
 
     users.map((user: User) => {
       this.content.innerHTML += <string>this.createLine(user);
@@ -40,12 +42,6 @@ class UserController {
       `;
     });
     (this.getFormElement('#accessRadio0')).checked = true;
-  };
-
-  async getList<T>(url: string): Promise<T[]> {
-    const response: Response = await fetch(url);
-    const list: T[] = await response.json();
-    return list;
   };
 
   addEmployee (): void {
